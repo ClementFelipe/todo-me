@@ -17,5 +17,7 @@
         "react"
     ],
     "rules": {
+        "react/prefer-stateless-function": 0,
+        "react/jsx-one-expression-per-line": 0
     }
 }

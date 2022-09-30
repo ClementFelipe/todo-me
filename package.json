@@ -4,7 +4,7 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start:dev": "parcel index.html"
+    "start:dev": "parcel src/index.html"
   },
   "dependencies": {
     "react": "^18.2.0",
