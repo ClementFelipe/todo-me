@@ -2,11 +2,15 @@ import React from 'react';
 
 export default class Card extends React.Component {
   render() {
+    const { title, description } = this.props;
+
     return (
-      <li>
-        <h3>Thing</h3>
-        <h4>Sub-thing</h4>
-      </li>
+      <div>
+        <li>
+          <h3>{title}</h3>
+          <h4>{description}</h4>
+        </li>
+      </div>
     );
   }
 }
