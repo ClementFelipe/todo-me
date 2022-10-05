@@ -11,6 +11,7 @@ export default class Board extends React.Component {
     const Div = styled.div`
       display: flex;
       justify-content: flex-start;
+      align-items: flex-start;
     `;
 
     const Button = styled.button`
@@ -22,7 +23,7 @@ export default class Board extends React.Component {
         <h1>{name}</h1>
         <Div>
           {comps}
-          <Button>+</Button>
+          <Button type="button">+</Button>
         </Div>
       </div>
     );
