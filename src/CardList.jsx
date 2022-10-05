@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Card from './Card';
 
 export default class CardList extends React.Component {
@@ -7,17 +8,22 @@ export default class CardList extends React.Component {
 
     const comps = items.map((c) => <Card title={c.title} description={c.description} />);
 
-    const style = {
-      border: '20px',
-    };
+    const Div = styled.div`
+      background-color: aliceblue;
+      padding: 0px 20px 0px 20px;
+    `;
+
+    const Button = styled.button`
+      width: 100%;
+      height: 30px;
+    `;
 
     return (
-      <div>
-        <h2>{name}</h2>
-        <ul>
-          {comps}
-        </ul>
-      </div>
+      <Div>
+        <h1>{name}</h1>
+        {comps}
+        <Button>+</Button>
+      </Div>
     );
   }
 }

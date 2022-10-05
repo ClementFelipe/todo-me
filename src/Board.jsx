@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import CardList from './CardList';
 
 export default class Board extends React.Component {
@@ -7,17 +8,22 @@ export default class Board extends React.Component {
 
     const comps = cardLists.map((cl) => <CardList list={cl} />);
 
-    const style = {
-      display: 'flex',
-      'justify-content': 'space-between',
-    };
+    const Div = styled.div`
+      display: flex;
+      justify-content: flex-start;
+    `;
+
+    const Button = styled.button`
+        width: 70px;
+    `;
 
     return (
       <div>
         <h1>{name}</h1>
-        <div style={style}>
+        <Div>
           {comps}
-        </div>
+          <Button>+</Button>
+        </Div>
       </div>
     );
   }
