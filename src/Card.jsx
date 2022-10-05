@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+
+const Div = styled.div`
+  background: papayawhip;
+`;
 
 export default class Card extends React.Component {
   render() {
     const { title, description } = this.props;
-
-    const Div = styled.div`
-      background: papayawhip;
-    `;
 
     return (
       <Div>
@@ -17,3 +18,13 @@ export default class Card extends React.Component {
     );
   }
 }
+
+Card.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+};
+
+Card.defaultProps = {
+  title: 'Title',
+  description: '',
+};
