@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CardDetail from './CardDetail';
 
-const CardDiv = styled.div`
+const TitleCardDiv = styled.div`
   background: papayawhip;
   :hover {
     border: 1px solid black
@@ -15,7 +15,7 @@ const Title = styled.h1`
   margin-bottom: 0;
 `;
 
-export default class Card extends React.Component {
+export default class TitleCard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +35,7 @@ export default class Card extends React.Component {
     const { isDetailOpen } = this.state;
 
     return (
-      <CardDiv>
+      <TitleCardDiv>
         <Title onClick={this.toggleDetailOpen}>{title}</Title>
         <CardDetail
           id={id}
@@ -45,19 +45,19 @@ export default class Card extends React.Component {
           isOpen={isDetailOpen}
           openToggle={this.toggleDetailOpen}
         />
-      </CardDiv>
+      </TitleCardDiv>
     );
   }
 }
 
-Card.propTypes = {
+TitleCard.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
   cardListId: PropTypes.string.isRequired,
 };
 
-Card.defaultProps = {
+TitleCard.defaultProps = {
   title: '<task name>',
   description: '',
 };

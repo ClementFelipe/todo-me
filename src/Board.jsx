@@ -8,11 +8,11 @@ const Div = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-`;
+  `;
 
 const Button = styled.button`
   width: 70px;
-`;
+  `;
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -21,9 +21,11 @@ export default class Board extends React.Component {
     this.state = {
       name: 'Board',
       cardLists: [],
+      /* eslint-disable react/no-unused-state */
       addList: this.addList,
       addCard: this.addCard,
       updateCard: this.updateCard,
+      /* eslint-enable react/no-unused-state */
     };
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Card from './TitleCard';
+import TitleCard from './TitleCard';
 import BoardContext from './BoardContext';
 
 const CardListDiv = styled.div`
@@ -31,7 +31,7 @@ export default class CardList extends React.Component {
               <Button type="button" onClick={(e) => addCard(id, e)}>+</Button>
             </CardListHeader>
             {items.map((c) => (
-              <Card
+              <TitleCard
                 id={c.id}
                 title={c.title}
                 description={c.description}
@@ -48,7 +48,7 @@ export default class CardList extends React.Component {
 CardList.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.shape(Card.propTypes)),
+  items: PropTypes.arrayOf(PropTypes.shape(TitleCard.propTypes)),
 };
 
 CardList.defaultProps = {
