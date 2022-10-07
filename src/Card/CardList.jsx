@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import TitleCard from './TitleCard';
-import BoardContext from './BoardContext';
+import BoardContext from '../Board/BoardContext';
 
 const CardListDiv = styled.div`
   background-color: aliceblue;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import BoardContext from './BoardContext';
-import CardList from './CardList';
-import randomId from './utils';
+import CardList from '../Card/CardList';
+import randomId from '../utils';
 
 const Div = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BoardContext from './BoardContext';
+import BoardContext from '../Board/BoardContext';
 
 export default class CardDetail extends React.Component {
   constructor(props) {
