@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import BoardContext from './BoardContext';
 import CardList from './CardList';
+import randomId from './utils';
 
 const Div = styled.div`
   display: flex;
@@ -20,27 +21,42 @@ export default class Board extends React.Component {
     this.state = {
       name: 'Board',
       cardLists: [],
-      addList: () => this.setState((state) => ({
-        cardLists: [
-          ...state.cardLists,
-          {
-            id: (Math.random() + 1).toString(36).substring(7),
-            name: 'List',
-            items: [],
-          }],
-      })),
-      addCard: (cardListId) => this.setState((state) => {
-        const cardList = state.cardLists.find((cl) => cl.id === cardListId);
-
-        cardList.items.push({ name: 'Task', description: 'Hola' });
-
-        this.setState(state);
-      }),
+      addList: this.addList,
+      addCard: this.addCard,
+      updateCard: this.updateCard,
     };
   }
 
+  addList = () => this.setState((state) => ({
+    cardLists: [
+      ...state.cardLists,
+      {
+        id: randomId(),
+        name: 'List',
+        items: [],
+      }],
+  }));
+
+  addCard = (cardListId) => this.setState((state) => {
+    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+
+    cardList.items.push({ id: randomId(), name: 'Task' });
+
+    this.setState(state);
+  });
+
+  updateCard = (cardListId, cardId, cardTitle, cardDescription) => this.setState((state) => {
+    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+    const card = cardList.items.find((c) => c.id === cardId);
+
+    card.title = cardTitle;
+    card.description = cardDescription;
+
+    this.setState(state);
+  });
+
   render() {
-    const { name, cardLists, addList } = this.state;
+    const { name, cardLists } = this.state;
 
     return (
       <BoardContext.Provider value={this.state}>
@@ -48,7 +64,7 @@ export default class Board extends React.Component {
           <h1>{name}</h1>
           <Div>
             {cardLists.map((cl) => <CardList id={cl.id} name={cl.name} items={cl.items} />)}
-            <Button type="button" onClick={addList}>+</Button>
+            <Button type="button" onClick={this.addList}>+</Button>
           </Div>
         </div>
       </BoardContext.Provider>

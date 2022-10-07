@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Card from './Card';
+import Card from './TitleCard';
 import BoardContext from './BoardContext';
 
-const Div = styled.div`
+const CardListDiv = styled.div`
   background-color: aliceblue;
   padding: 0px 20px 0px 20px;
+`;
+
+const CardListHeader = styled.div`
+  display: flex;
 `;
 
 const Button = styled.button`
@@ -21,11 +25,20 @@ export default class CardList extends React.Component {
     return (
       <BoardContext.Consumer>
         {({ addCard }) => (
-          <Div>
-            <h1>{name}</h1>
-            {items.map((c) => <Card title={c.title} description={c.description} />)}
-            <Button onClick={(e) => addCard(id, e)}>+</Button>
-          </Div>
+          <CardListDiv>
+            <CardListHeader>
+              <h1>{name}</h1>
+              <Button type="button" onClick={(e) => addCard(id, e)}>+</Button>
+            </CardListHeader>
+            {items.map((c) => (
+              <Card
+                id={c.id}
+                title={c.title}
+                description={c.description}
+                cardListId={id}
+              />
+            ))}
+          </CardListDiv>
         )}
       </BoardContext.Consumer>
     );

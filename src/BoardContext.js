@@ -5,4 +5,5 @@ export default React.createContext({
   cardLists: [],
   addList: () => {},
   addCard: () => {},
+  updateCard: () => {},
 });
