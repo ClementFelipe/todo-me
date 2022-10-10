@@ -4,7 +4,7 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "start:dev": "parcel src/index.html"
+    "start:dev": "parcel ui/index.html"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
