@@ -24,11 +24,12 @@ export default class CardList extends React.Component {
 
     return (
       <BoardContext.Consumer>
-        {({ addCard }) => (
+        {({ addCard, deleteCardList }) => (
           <CardListDiv>
             <CardListHeader>
               <h1>{name}</h1>
               <Button type="button" onClick={(e) => addCard(id, e)}>+</Button>
+              <Button type="button" onClick={(e) => deleteCardList(id, e)}>-</Button>
             </CardListHeader>
             {items.map((c) => (
               <TitleCard
