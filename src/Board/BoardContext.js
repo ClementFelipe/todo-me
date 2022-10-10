@@ -6,4 +6,5 @@ export default React.createContext({
   addList: () => {},
   addCard: () => {},
   updateCard: () => {},
+  deleteCard: () => {},
 });

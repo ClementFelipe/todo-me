@@ -25,6 +25,7 @@ export default class Board extends React.Component {
       addList: this.addList,
       addCard: this.addCard,
       updateCard: this.updateCard,
+      deleteCard: this.deleteCard,
       /* eslint-enable react/no-unused-state */
     };
   }
@@ -53,6 +54,14 @@ export default class Board extends React.Component {
 
     card.title = cardTitle;
     card.description = cardDescription;
+
+    this.setState(state);
+  });
+
+  deleteCard = (cardListId, cardId) => this.setState((state) => {
+    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+
+    cardList.items = cardList.items.filter((c) => c.id !== cardId);
 
     this.setState(state);
   });

@@ -25,15 +25,16 @@ export default class CardDetail extends React.Component {
 
     return (
       <BoardContext.Consumer>
-        {({ updateCard }) => (
+        {({ updateCard, deleteCard }) => (
           <dialog open={isOpen}>
             <form>
               <input type="text" value={title} onChange={this.changeTitle} />
               <br />
               <input type="text" value={description} onChange={this.changeDescription} />
             </form>
-            <button type="button" onClick={(e) => updateCard(cardListId, id, title, description, e)}>Update</button>
             <button type="button" onClick={openToggle}>Cancel</button>
+            <button type="button" onClick={(e) => updateCard(cardListId, id, title, description, e)}>Update</button>
+            <button type="button" onClick={(e) => deleteCard(cardListId, id, e)}>Delete</button>
           </dialog>
         )}
       </BoardContext.Consumer>
