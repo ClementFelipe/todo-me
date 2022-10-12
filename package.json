@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "description": "",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "start:dev": "parcel ui/index.html"
+    "start:ui": "parcel ui/index.html",
+    "start:server": "nodemon server/app.js"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +24,7 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemon": "^2.0.20",
     "parcel": "^2.7.0",
     "process": "^0.11.10"
   }
