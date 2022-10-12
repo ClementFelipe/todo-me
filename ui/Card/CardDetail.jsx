@@ -1,45 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BoardContext from '../Board/BoardContext';
 
-export default class CardDetail extends React.Component {
-  constructor(props) {
-    super(props);
+export default function CardDetail(props) {
+  const {
+    id,
+    cardListId,
+    isOpen,
+    openToggle,
+    title: initialTitle,
+    description: initialDescription,
+  } = props;
 
-    this.state = {
-      title: props.title,
-      description: props.description,
-    };
-  }
+  const [title, changeTitle] = useState(initialTitle);
+  const [description, changeDescription] = useState(initialDescription);
 
-  changeTitle = (e) => this.setState({ title: e.target.value });
-
-  changeDescription = (e) => this.setState({ description: e.target.value });
-
-  render() {
-    const {
-      id, cardListId, isOpen, openToggle,
-    } = this.props;
-
-    const { title, description } = this.state;
-
-    return (
-      <BoardContext.Consumer>
-        {({ updateCard, deleteCard }) => (
-          <dialog open={isOpen}>
-            <form>
-              <input type="text" value={title} onChange={this.changeTitle} />
-              <br />
-              <input type="text" value={description} onChange={this.changeDescription} />
-            </form>
-            <button type="button" onClick={openToggle}>Cancel</button>
-            <button type="button" onClick={(e) => updateCard(cardListId, id, title, description, e)}>Update</button>
-            <button type="button" onClick={(e) => deleteCard(cardListId, id, e)}>Delete</button>
-          </dialog>
-        )}
-      </BoardContext.Consumer>
-    );
-  }
+  return (
+    <BoardContext.Consumer>
+      {({ updateCard, deleteCard }) => (
+        <dialog open={isOpen}>
+          <form>
+            <input type="text" value={title} onChange={(e) => changeTitle(e.target.value)} />
+            <br />
+            <input type="text" value={description} onChange={(e) => changeDescription(e.target.value)} />
+          </form>
+          <button type="button" onClick={openToggle}>Cancel</button>
+          <button type="button" onClick={(e) => updateCard(cardListId, id, title, description, e)}>Update</button>
+          <button type="button" onClick={(e) => deleteCard(cardListId, id, e)}>Delete</button>
+        </dialog>
+      )}
+    </BoardContext.Consumer>
+  );
 }
 
 CardDetail.propTypes = {

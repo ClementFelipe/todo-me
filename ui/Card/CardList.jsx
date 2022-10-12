@@ -18,32 +18,30 @@ const Button = styled.button`
   height: 30px;
 `;
 
-export default class CardList extends React.Component {
-  render() {
-    const { id, name, items } = this.props;
+export default function CardList(props) {
+  const { id, name, items } = props;
 
-    return (
-      <BoardContext.Consumer>
-        {({ addCard, deleteCardList }) => (
-          <CardListDiv>
-            <CardListHeader>
-              <h1>{name}</h1>
-              <Button type="button" onClick={(e) => addCard(id, e)}>+</Button>
-              <Button type="button" onClick={(e) => deleteCardList(id, e)}>-</Button>
-            </CardListHeader>
-            {items.map((c) => (
-              <TitleCard
-                id={c.id}
-                title={c.title}
-                description={c.description}
-                cardListId={id}
-              />
-            ))}
-          </CardListDiv>
-        )}
-      </BoardContext.Consumer>
-    );
-  }
+  return (
+    <BoardContext.Consumer>
+      {({ addCard, deleteCardList }) => (
+        <CardListDiv>
+          <CardListHeader>
+            <h1>{name}</h1>
+            <Button type="button" onClick={(e) => addCard(id, e)}>+</Button>
+            <Button type="button" onClick={(e) => deleteCardList(id, e)}>-</Button>
+          </CardListHeader>
+          {items.map((c) => (
+            <TitleCard
+              id={c.id}
+              title={c.title}
+              description={c.description}
+              cardListId={id}
+            />
+          ))}
+        </CardListDiv>
+      )}
+    </BoardContext.Consumer>
+  );
 }
 
 CardList.propTypes = {

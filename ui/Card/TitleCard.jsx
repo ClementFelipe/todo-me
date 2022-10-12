@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import CardDetail from './CardDetail';
 
@@ -15,39 +15,28 @@ const Title = styled.h1`
   margin-bottom: 0;
 `;
 
-export default class TitleCard extends React.Component {
-  constructor(props) {
-    super(props);
+export default function TitleCard(props) {
+  const {
+    id, title, description, cardListId,
+  } = props;
 
-    this.state = {
-      isDetailOpen: false,
-    };
-  }
+  const [isDetailOpen, setDetailOpen] = useState(false);
 
-  toggleDetailOpen = () => this.setState((state) => ({
-    isDetailOpen: !state.isDetailOpen,
-  }));
+  const toggleDetailOpen = () => setDetailOpen(!isDetailOpen);
 
-  render() {
-    const {
-      id, title, description, cardListId,
-    } = this.props;
-    const { isDetailOpen } = this.state;
-
-    return (
-      <TitleCardDiv>
-        <Title onClick={this.toggleDetailOpen}>{title}</Title>
-        <CardDetail
-          id={id}
-          title={title}
-          description={description}
-          cardListId={cardListId}
-          isOpen={isDetailOpen}
-          openToggle={this.toggleDetailOpen}
-        />
-      </TitleCardDiv>
-    );
-  }
+  return (
+    <TitleCardDiv>
+      <Title onClick={toggleDetailOpen}>{title}</Title>
+      <CardDetail
+        id={id}
+        title={title}
+        description={description}
+        cardListId={cardListId}
+        isOpen={isDetailOpen}
+        openToggle={toggleDetailOpen}
+      />
+    </TitleCardDiv>
+  );
 }
 
 TitleCard.propTypes = {
