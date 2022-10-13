@@ -57,6 +57,7 @@ export default function Board() {
     setCardLists(cardLists.filter((cl) => cl.id !== cardListId));
   };
 
+  // TODO: fix this constructed context issue
   return (
     <BoardContext.Provider value={{
       addCard,
