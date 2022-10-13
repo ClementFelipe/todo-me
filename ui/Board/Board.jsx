@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BoardContext from './BoardContext';
 import CardList from '../Card/CardList';
@@ -8,84 +8,70 @@ const Div = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  `;
+`;
 
 const Button = styled.button`
   width: 70px;
-  `;
+`;
 
-export default class Board extends React.Component {
-  constructor(props) {
-    super(props);
+export default function Board() {
+  const [name, setName] = useState('Board');
+  const [cardLists, setCardLists] = useState([]);
 
-    this.state = {
-      name: 'Board',
-      cardLists: [],
-      /* eslint-disable react/no-unused-state */
-      addList: this.addList,
-      addCard: this.addCard,
-      updateCard: this.updateCard,
-      deleteCard: this.deleteCard,
-      deleteCardList: this.deleteCardList,
-      /* eslint-enable react/no-unused-state */
-    };
-  }
+  const addList = () => setCardLists([
+    ...cardLists,
+    {
+      id: randomId(),
+      name: 'List',
+      items: [],
+    },
+  ]);
 
-  addList = () => this.setState((state) => ({
-    cardLists: [
-      ...state.cardLists,
-      {
-        id: randomId(),
-        name: 'List',
-        items: [],
-      }],
-  }));
-
-  addCard = (cardListId) => this.setState((state) => {
-    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+  const addCard = (cardListId) => {
+    const cardList = cardLists.find((cl) => cl.id === cardListId);
 
     cardList.items.push({ id: randomId(), name: 'Task' });
 
-    this.setState(state);
-  });
+    setCardLists([...cardLists]);
+  };
 
-  updateCard = (cardListId, cardId, cardTitle, cardDescription) => this.setState((state) => {
-    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+  const updateCard = (cardListId, cardId, cardTitle, cardDescription) => {
+    const cardList = cardLists.find((cl) => cl.id === cardListId);
     const card = cardList.items.find((c) => c.id === cardId);
 
     card.title = cardTitle;
     card.description = cardDescription;
 
-    this.setState(state);
-  });
+    setCardLists([...cardLists]);
+  };
 
-  deleteCard = (cardListId, cardId) => this.setState((state) => {
-    const cardList = state.cardLists.find((cl) => cl.id === cardListId);
+  const deleteCard = (cardListId, cardId) => {
+    const cardList = cardLists.find((cl) => cl.id === cardListId);
 
     cardList.items = cardList.items.filter((c) => c.id !== cardId);
 
-    this.setState(state);
-  });
+    setCardLists([...cardLists]);
+  };
 
-  deleteCardList = (cardListId) => this.setState((state) => {
-    this.setState({
-      cardLists: state.cardLists.filter((cl) => cl.id !== cardListId),
-    });
-  });
+  const deleteCardList = (cardListId) => {
+    setCardLists(cardLists.filter((cl) => cl.id !== cardListId));
+  };
 
-  render() {
-    const { name, cardLists } = this.state;
-
-    return (
-      <BoardContext.Provider value={this.state}>
-        <div>
-          <h1>{name}</h1>
-          <Div>
-            {cardLists.map((cl) => <CardList id={cl.id} name={cl.name} items={cl.items} />)}
-            <Button type="button" onClick={this.addList}>+</Button>
-          </Div>
-        </div>
-      </BoardContext.Provider>
-    );
-  }
+  return (
+    <BoardContext.Provider value={{
+      addCard,
+      updateCard,
+      deleteCard,
+      deleteCardList,
+    }}
+    >
+      <div>
+        <h1>{name}</h1>
+        <Div>
+          {cardLists.map((cl) => <CardList id={cl.id} name={cl.name} items={cl.items} />)}
+          <Button type="button" onClick={addList}>+</Button>
+        </Div>
+      </div>
+    </BoardContext.Provider>
+  );
 }
