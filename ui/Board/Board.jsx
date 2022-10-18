@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import BoardContext from './BoardContext';
 import CardList from '../Card/CardList';
-import randomId from '../utils';
+import * as api from '../api';
 
 const Div = styled.div`
   display: flex;
@@ -15,61 +15,43 @@ const Button = styled.button`
 `;
 
 export default function Board() {
-  const [name, setName] = useState('Board');
-  const [cardLists, setCardLists] = useState([]);
+  const [board, setBoard] = useState({ name: 'Board', cardLists: [] });
+  const [command, setCommand] = useState(null);
 
-  const addList = () => setCardLists([
-    ...cardLists,
-    {
-      id: randomId(),
-      name: 'List',
-      items: [],
-    },
-  ]);
+  useEffect(() => {
+    async function eff() {
+      if (command) {
+        await command();
 
-  const addCard = (cardListId) => {
-    const cardList = cardLists.find((cl) => cl.id === cardListId);
+        // TODO: Fix, causes double call to get board
+        setCommand(null);
+      }
 
-    cardList.items.push({ id: randomId(), name: 'Task' });
+      setBoard(await api.getBoard());
+    }
 
-    setCardLists([...cardLists]);
-  };
+    eff();
+  }, [command]);
 
-  const updateCard = (cardListId, cardId, cardTitle, cardDescription) => {
-    const cardList = cardLists.find((cl) => cl.id === cardListId);
-    const card = cardList.items.find((c) => c.id === cardId);
+  const addList = () => setCommand(() => api.addList);
+  const addCard = (cardListId) => setCommand(() => () => api.addCard(cardListId));
+  const updateCard = (cardListId, cardId, cardTitle, cardDescription) => setCommand(() => () => api.updateCard(cardListId, cardId, cardTitle, cardDescription));
+  const deleteCard = (cardListId, cardId) => setCommand(() => () => api.deleteCard(cardListId, cardId));
+  const deleteCardList = (cardListId) => setCommand(() => () => api.deleteCardList(cardListId));
 
-    card.title = cardTitle;
-    card.description = cardDescription;
+  const funcs = useMemo(() => ({
+    addCard,
+    updateCard,
+    deleteCard,
+    deleteCardList,
+  }), []);
 
-    setCardLists([...cardLists]);
-  };
-
-  const deleteCard = (cardListId, cardId) => {
-    const cardList = cardLists.find((cl) => cl.id === cardListId);
-
-    cardList.items = cardList.items.filter((c) => c.id !== cardId);
-
-    setCardLists([...cardLists]);
-  };
-
-  const deleteCardList = (cardListId) => {
-    setCardLists(cardLists.filter((cl) => cl.id !== cardListId));
-  };
-
-  // TODO: fix this constructed context issue
   return (
-    <BoardContext.Provider value={{
-      addCard,
-      updateCard,
-      deleteCard,
-      deleteCardList,
-    }}
-    >
+    <BoardContext.Provider value={funcs}>
       <div>
-        <h1>{name}</h1>
+        <h1>{board.name}</h1>
         <Div>
-          {cardLists.map((cl) => <CardList id={cl.id} name={cl.name} items={cl.items} />)}
+          {board.cardLists.map((cl) => <CardList id={cl.id} name={cl.name} items={cl.items} />)}
           <Button type="button" onClick={addList}>+</Button>
         </Div>
       </div>
